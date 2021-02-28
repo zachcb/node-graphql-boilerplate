@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "removeComments": true,
+    "sourceRoot": "src",
+    "outDir": ".build",
+    "baseUrl": ".",
+    "lib": ["esnext", "esnext.asynciterable", "dom"],
+    "types": ["node"],
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "src/bin/types/*",
+      ]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "migrations/*.js",
+  ]
+}

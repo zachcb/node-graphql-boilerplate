@@ -1,0 +1,75 @@
+version: "3"
+
+services:
+    server:
+        container_name: gql-test-server
+        env_file: .env
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        depends_on:
+            - postgres
+            - redis
+        networks:
+        - postgres
+        - redis
+        ports:
+        - ${PORT}:${PORT}
+        build:
+            context: .
+
+    postgres:
+        container_name: gql-test-postgres
+        image: postgres:latest
+        env_file: .env
+        environment:
+            POSTGRES_MODE: ${PG_MODE}
+            POSTGRES_PRIMARY_USER: ${PG_PRIMARY_USER}
+            POSTGRES_PRIMARY_PASSWORD: ${PG_PRIMARY_PASSWORD}
+            POSTGRES_DATABASE: ${PG_DATABASE}
+            POSTGRES_USER: ${PG_USER}
+            POSTGRES_PASSWORD: ${PG_PASSWORD}
+            POSTGRES_ROOT_PASSWORD: ${PG_ROOT_PASSWORD}
+            PGDATA: /var/lib/postgresql/data
+        ports:
+            - "${PG_PORT}:${PG_PORT}"
+        volumes:
+            - "/var/run/postgres/postgres.sock"
+            - "pgdata:/var/lib/postgresql/data"
+        networks:
+            - postgres
+        restart: unless-stopped
+   
+    redis:
+        container_name: gql-test-redis
+        image: redis
+        command: redis-server /usr/local/etc/redis/redis.conf
+        volumes:
+            - redis:/usr/local/etc/redis/data
+            - ./.docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+        networks:
+            - redis
+        ports:
+            - ${RD_PORT}:${RD_PORT}
+        expose:
+            - ${RD_PORT}
+
+    redis-commander:
+        container_name: gql-test-redis-commander
+        hostname: redis-commander
+        image: rediscommander/redis-commander:latest
+        environment:
+            - REDIS_HOSTS=local:redis:${RD_PORT}
+        networks:
+            - redis
+        ports:
+            - ${RDC_PORT}:${RDC_PORT}
+volumes:
+    redis:
+    pgdata:
+    
+networks:
+    postgres:
+        driver: bridge
+    redis:
+        driver: bridge
