@@ -18,4 +18,4 @@ COPY . .
 # RUN npm run build
 
 EXPOSE 5000
-CMD ["yarn", "start:dev"]
+CMD ["./.docker/wait-for-it.sh", "db:5432", "--", "yarn", "start:dev"]
