@@ -3,15 +3,23 @@ module.exports = {
   env: {
     node: true,
   },
+  globals: {
+    Promise: "readonly"
+  },
   parser: '@typescript-eslint/parser',
   plugins: [
     '@typescript-eslint',
     'import',
   ],
+  parserOptions: {
+    project: './tsconfig.json',
+  },
   extends: [
     'eslint:recommended',
     'airbnb-base',
     'plugin:@typescript-eslint/recommended',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
+
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -19,7 +27,21 @@ module.exports = {
     'import/prefer-default-export': 0,
     'import/extensions': 0,
     'arrow-body-style': 0,
+    'max-classes-per-file': 0,
+    'quotes': ["warn", "double"],
+    // note you must disable the base rule as it can report incorrect errors
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/no-explicit-any': 0,
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'], // Your TypeScript files extension
+      parserOptions: {
+        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+      },
+    }
+  ],
   settings: {
     'import/resolver': {
       node: {
