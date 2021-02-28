@@ -29,7 +29,7 @@ const connectionOptions: Array<ConnectionOptions> = [{
   password: config.PG_PASSWORD,
   ssl: config.PRODUCTION,
   synchronize: true,
-  logging: !config.PRODUCTION,
+  // logging: !config.PRODUCTION,
   // entities: [`${__dirname}/database/models/**/*.{js,ts}`],
   entities: [User, Profile, Post],
   dropSchema: true,
