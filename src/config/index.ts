@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   // eslint-disable-next-line
   require('dotenv').config();
 }
@@ -16,8 +16,8 @@ export interface IConfig {
 }
 
 export const config: IConfig = {
-  PRODUCTION: process.env.NODE_ENV === 'production',
-  PORT: parseInt(process.env.PORT, 10) || 3000,
+  PRODUCTION: process.env.NODE_ENV === "production",
+  PORT: parseInt(process.env.PORT, 10) || 5000,
   ORIGIN_URL: process.env.ORIGIN_URL,
   PG_NAME: process.env.PG_NAME,
   PG_HOST: process.env.PG_HOST,
