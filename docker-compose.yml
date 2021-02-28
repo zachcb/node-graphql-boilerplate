@@ -33,7 +33,7 @@ services:
         volumes:
             # - "./docker/postgres.conf:/usr/local/etc/postgres/postgres.conf"
             - "/var/run/postgres/postgres.sock"
-            - "pgdata:/var/lib/postgresql/data"
+            - "./.docker/postgres/data:/var/lib/postgresql/data"
         networks:
             - postgres
         restart: unless-stopped
