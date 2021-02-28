@@ -11,10 +11,10 @@ services:
             - postgres
             - redis
         networks:
-        - postgres
-        - redis
+            - postgres
+            - redis
         ports:
-        - ${PORT}:${PORT}
+            - ${PORT}:${PORT}
         build:
             context: .
 
