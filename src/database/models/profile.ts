@@ -9,27 +9,21 @@ import {
 
 @ObjectType()
 @Entity({
-  name: "Post",
+  name: "Profile",
   orderBy: { id: "DESC" },
 })
-export class Post {
+export class Profile {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    title: string;
+    age: string;
 
     @Column()
-    description: string;
+    gender: string;
 
     @Column()
     photo: string;
-
-    @Column()
-    content: string;
-
-    @Column()
-    userId: number;
 
     @Field()
     @CreateDateColumn({ name: "CreatedAt" })
