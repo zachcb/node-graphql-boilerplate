@@ -23,17 +23,15 @@ services:
         image: postgres:latest
         env_file: .env
         environment:
-            POSTGRES_MODE: ${PG_MODE}
-            POSTGRES_PRIMARY_USER: ${PG_PRIMARY_USER}
-            POSTGRES_PRIMARY_PASSWORD: ${PG_PRIMARY_PASSWORD}
             POSTGRES_DATABASE: ${PG_DATABASE}
             POSTGRES_USER: ${PG_USER}
             POSTGRES_PASSWORD: ${PG_PASSWORD}
-            POSTGRES_ROOT_PASSWORD: ${PG_ROOT_PASSWORD}
             PGDATA: /var/lib/postgresql/data
+        # command: "postgres -c config_file=/usr/local/etc/postgres/postgres.conf"
         ports:
             - "${PG_PORT}:${PG_PORT}"
         volumes:
+            # - "./docker/postgres.conf:/usr/local/etc/postgres/postgres.conf"
             - "/var/run/postgres/postgres.sock"
             - "pgdata:/var/lib/postgresql/data"
         networks:
@@ -67,6 +65,7 @@ services:
 volumes:
     redis:
     pgdata:
+        driver: local
     
 networks:
     postgres:
