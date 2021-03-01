@@ -1,14 +1,11 @@
 version: "3"
-
+# Not finished
 services:
     server:
         container_name: gql-test-server
         env_file: .env
-        environment:
-            DEPEND_HOST: postgres
-            DEPEND_PORT: ${PG_PORT}
         volumes:
-            - ./services/api/src:/usr/src/app/src:delegated
+            # - .:/usr/src/app
             - /usr/src/app/node_modules
         depends_on:
             - postgres
@@ -19,11 +16,9 @@ services:
         ports:
             - ${PORT}:${PORT}
         build:
-            context: .
-            dockerfile: ./docker/Dockerfile.dev
-            # target: development
-            # args:
-            #     mode: development
+            context: ./docker/Dockerfile.prod
+            args:
+                mode: production
 
     postgres:
         container_name: gql-test-postgres
@@ -51,7 +46,7 @@ services:
         command: redis-server /usr/local/etc/redis/redis.conf
         volumes:
             - redis:/usr/local/etc/redis/data
-            - ./docker/configs/redis.conf:/usr/local/etc/redis/redis.conf
+            - ./docker/config/redis.conf:/usr/local/etc/redis/redis.conf
         networks:
             - redis
         ports:

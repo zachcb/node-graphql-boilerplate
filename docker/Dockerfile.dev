@@ -1,0 +1,28 @@
+FROM node
+
+# Create api directory
+WORKDIR /usr/src/app
+
+# Package and yarn lock for npm install
+COPY services/api/package.json ./
+COPY services/api/yarn.lock ./
+
+# Install packages
+RUN yarn
+
+# Bundle api source
+COPY services/api/ .
+
+# Add docker util files
+COPY ./docker/utils/docker-entrypoint.sh ./
+COPY ./docker/utils/wait-for-it.sh ./
+
+# Set permissions to execute
+RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
+
+# Service entry port
+EXPOSE 5000
+
+# Wait for it docker entry
+# ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["yarn", "serve:dev"]
