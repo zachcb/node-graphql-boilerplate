@@ -12,15 +12,15 @@ import {
   BaseEntity,
   BeforeUpdate,
 } from "typeorm";
-import { Profile } from "./profile";
-import { Post } from "./post";
+import { ProfileEntity } from "./profile";
+import { PostEntity } from "./post";
 
 @ObjectType()
 @Entity({
   name: "User",
   orderBy: { id: "DESC" },
 })
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
     @Field(() => ID)
     @Index({ unique: true })
     @PrimaryGeneratedColumn("increment", { name: "Id" })
@@ -30,13 +30,13 @@ export class User extends BaseEntity {
     @Column({ name: "Name", unique: true, nullable: false })
     name: string;
 
-    @OneToOne(() => Profile)
+    @OneToOne(() => ProfileEntity)
     @JoinColumn()
-    profile: Profile;
+    profile: ProfileEntity;
 
-    @OneToMany(() => Post, (post) => post.userId)
+    @OneToMany(() => PostEntity, (post) => post.userId)
     @JoinColumn()
-    post: Post;
+    post: PostEntity;
 
     @Field()
     @CreateDateColumn({ name: "CreatedAt" })

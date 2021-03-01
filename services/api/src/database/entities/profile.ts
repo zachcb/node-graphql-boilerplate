@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   Column,
   BaseEntity,
+  Index,
 } from "typeorm";
 
 @ObjectType()
@@ -13,12 +14,19 @@ import {
   name: "Profile",
   orderBy: { id: "DESC" },
 })
-export class Profile extends BaseEntity {
-    @PrimaryGeneratedColumn()
+export class ProfileEntity extends BaseEntity {
+    @Field(() => ID)
+    @Index({ unique: true })
+    @PrimaryGeneratedColumn("increment", { name: "Id" })
     id: number;
 
+    @Field(() => ID)
+    @Index({ unique: true })
     @Column()
-    age: string;
+    userId: number;
+
+    @Column()
+    age: number;
 
     @Column()
     gender: string;

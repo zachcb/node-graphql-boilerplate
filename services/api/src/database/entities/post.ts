@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   Column,
   BaseEntity,
+  Index,
 } from "typeorm";
 
 @ObjectType()
@@ -13,9 +14,14 @@ import {
   name: "Post",
   orderBy: { id: "DESC" },
 })
-export class Post extends BaseEntity {
+export class PostEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Field(() => ID)
+    @Index({ unique: true })
+    @Column()
+    userId: number
 
     @Column()
     title: string;
@@ -24,13 +30,7 @@ export class Post extends BaseEntity {
     description: string;
 
     @Column()
-    photo: string;
-
-    @Column()
     content: string;
-
-    @Column()
-    userId: number;
 
     @Field()
     @CreateDateColumn({ name: "CreatedAt" })

@@ -42,7 +42,7 @@
       ],
     },
     "eslint.validate": ["typescript"],
-    "typescript.referencesCodeLens.enabled": true,
+    // "typescript.referencesCodeLens.enabled": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     }

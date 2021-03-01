@@ -2,24 +2,27 @@ import {
   Args, Mutation, Query, Resolver,
 } from "type-graphql";
 import { getConnection, getRepository } from "typeorm";
-import { User } from "@/database/entities/user";
-import { Insert, Select } from "../bin/graphql/types/args/user";
+import { UserEntity } from "@/database/entities/user";
+import { Insert, Select } from "./input";
 
 @Resolver()
 export class UserResolver {
-  private table = getRepository(User, "postgres");
+  private table = getRepository(UserEntity, "postgres");
 
-  @Query(() => [User], { nullable: true })
+  @Query(() => [UserEntity], { nullable: true })
   async users(@Args() {
     where, take, skip, order,
-  }: Select): Promise<User[]> {
+  }: Select): Promise<UserEntity[]> {
     return this.table.find({
-      where: { ...where }, order: { ...order }, skip, take,
+      where: { ...where },
+      order: { ...order },
+      skip,
+      take,
     });
   }
 
-  @Mutation(() => User, { nullable: true })
-  async addUser(@Args() { name }: Insert): Promise<User> {
+  @Mutation(() => UserEntity, { nullable: true })
+  async addUser(@Args() { name }: Insert): Promise<UserEntity> {
     const exists = await this.table.findOne({ where: { name } });
 
     if (exists) {
@@ -29,7 +32,7 @@ export class UserResolver {
     await getConnection("postgres")
       .createQueryBuilder()
       .insert()
-      .into(User)
+      .into(UserEntity)
       .values({ name })
       .execute();
 

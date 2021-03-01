@@ -1,24 +1,16 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
-import { buildSchema } from "type-graphql";
 import cors from "cors";
 import { createInterface } from "@/database";
 import { logger } from "./utils/logger";
 import { config } from "./config";
-
-// Root resolver
-const root = {
-  hello: () => "Hello world!",
-};
+import { createSchema } from "./schema";
 
 export const main = async (): Promise<void> => {
   const PGInterface = createInterface();
   PGInterface.connect();
 
-  const schema = await buildSchema({
-    resolvers: [`${__dirname}/resolvers/**/*{.js,.ts}`],
-    globalMiddlewares: [],
-  });
+  const schema = await createSchema();
 
   // Create an express server and a GraphQL endpoint
   const app = express();
@@ -36,7 +28,6 @@ export const main = async (): Promise<void> => {
 
   app.use("/graphql", graphqlHTTP({
     schema, // Must be provided
-    rootValue: root,
     graphiql: true, // Enable GraphiQL when server endpoint is accessed in browser
   }));
 

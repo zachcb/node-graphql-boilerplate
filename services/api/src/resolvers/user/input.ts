@@ -1,5 +1,6 @@
 import { ArgsType, Field, InputType } from "type-graphql";
-import { SharedSelectInput, Sort } from "./input";
+import { UserEntity } from "@/database/entities/user";
+import { SharedSelectInput, Sort } from "@/resolvers/bin/inputs/input";
 
 @InputType()
 export class Where {
@@ -15,8 +16,9 @@ export class Order {
   @Field(() => Sort, { nullable: true })
   id?: Sort;
 }
+
 @ArgsType()
-export class Insert {
+export class Insert implements Partial<UserEntity> {
   @Field() name: string;
 }
 
