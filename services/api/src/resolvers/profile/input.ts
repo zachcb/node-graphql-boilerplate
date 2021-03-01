@@ -3,13 +3,13 @@ import { ProfileEntity } from "@/database/entities/profile";
 import { SharedSelectInput, Sort } from "@/resolvers/bin/inputs/input";
 
 @InputType()
-export class Where {
+export class WhereProfile {
   @Field({ nullable: true })
   name?: string;
 }
 
 @InputType()
-export class Order {
+export class OrderProfile {
   @Field(() => Sort, { nullable: true })
   name?: Sort;
 
@@ -18,8 +18,8 @@ export class Order {
 }
 
 @ArgsType()
-export class Insert implements Partial<ProfileEntity> {
-  @Field() userId: number;
+export class InsertProfile implements Partial<ProfileEntity> {
+  @Field() id: number;
 
   @Field() age: number;
 
@@ -30,9 +30,9 @@ export class Insert implements Partial<ProfileEntity> {
 
 @ArgsType()
 export class Select extends SharedSelectInput {
-  @Field(() => Where, { nullable: true })
-  where?: Where;
+  @Field(() => WhereProfile, { nullable: true })
+  where?: WhereProfile;
 
-  @Field(() => Order, { nullable: true })
-  order?: Order;
+  @Field(() => OrderProfile, { nullable: true })
+  order?: OrderProfile;
 }

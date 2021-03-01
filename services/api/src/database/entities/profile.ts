@@ -17,28 +17,26 @@ import {
 export class ProfileEntity extends BaseEntity {
     @Field(() => ID)
     @Index({ unique: true })
-    @PrimaryGeneratedColumn("increment", { name: "Id" })
+    @PrimaryGeneratedColumn("increment", { name: "id" })
     id: number;
 
-    @Field(() => ID)
-    @Index({ unique: true })
-    @Column()
-    userId: number;
-
-    @Column()
+    @Field()
+    @Column({ name: "age" })
     age: number;
 
-    @Column()
+    @Field()
+    @Column({ name: "gender" })
     gender: string;
 
-    @Column()
+    @Field()
+    @Column({ name: "photo" })
     photo: string;
 
     @Field()
-    @CreateDateColumn({ name: "CreatedAt" })
+    @CreateDateColumn({ name: "createdAt" })
     createdAt: Date;
 
     @Field()
-    @UpdateDateColumn({ name: "UpdatedAt" })
+    @UpdateDateColumn({ name: "updatedAt" })
     updatedAt: Date;
 }

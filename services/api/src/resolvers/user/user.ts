@@ -3,7 +3,7 @@ import {
 } from "type-graphql";
 import { getConnection, getRepository } from "typeorm";
 import { UserEntity } from "@/database/entities/user";
-import { Insert, Select } from "./input";
+import { InsertUser, SelectUser } from "./input";
 
 @Resolver()
 export class UserResolver {
@@ -12,7 +12,7 @@ export class UserResolver {
   @Query(() => [UserEntity], { nullable: true })
   async users(@Args() {
     where, take, skip, order,
-  }: Select): Promise<UserEntity[]> {
+  }: SelectUser): Promise<UserEntity[]> {
     return this.table.find({
       where: { ...where },
       order: { ...order },
@@ -22,7 +22,7 @@ export class UserResolver {
   }
 
   @Mutation(() => UserEntity, { nullable: true })
-  async addUser(@Args() { name }: Insert): Promise<UserEntity> {
+  async addUser(@Args() { name }: InsertUser): Promise<UserEntity> {
     const exists = await this.table.findOne({ where: { name } });
 
     if (exists) {

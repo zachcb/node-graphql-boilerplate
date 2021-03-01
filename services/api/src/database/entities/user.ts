@@ -23,13 +23,14 @@ import { PostEntity } from "./post";
 export class UserEntity extends BaseEntity {
     @Field(() => ID)
     @Index({ unique: true })
-    @PrimaryGeneratedColumn("increment", { name: "Id" })
+    @PrimaryGeneratedColumn("increment", { name: "id" })
     id: number;
 
     @Field()
-    @Column({ name: "Name", unique: true, nullable: false })
+    @Column({ name: "name", unique: true, nullable: false })
     name: string;
 
+    @Field()
     @OneToOne(() => ProfileEntity)
     @JoinColumn()
     profile: ProfileEntity;
@@ -39,11 +40,11 @@ export class UserEntity extends BaseEntity {
     post: PostEntity;
 
     @Field()
-    @CreateDateColumn({ name: "CreatedAt" })
+    @CreateDateColumn({ name: "createdAt" })
     createdAt: Date;
 
     @Field()
-    @UpdateDateColumn({ name: "UpdatedAt" })
+    @UpdateDateColumn({ name: "updatedAt" })
     updatedAt: Date;
 
     @BeforeUpdate()

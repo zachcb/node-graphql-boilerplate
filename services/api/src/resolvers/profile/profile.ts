@@ -3,7 +3,7 @@ import {
 } from "type-graphql";
 import { getConnection, getRepository } from "typeorm";
 import { ProfileEntity } from "@/database/entities/profile";
-import { Select } from "./input";
+import { Select, InsertProfile } from "./input";
 
 @Resolver()
 export class ProfileResolver {
@@ -22,20 +22,20 @@ export class ProfileResolver {
   }
 
   @Mutation(() => ProfileEntity, { nullable: true })
-  async addProfile(@Args() { userId, ...context }: ProfileEntity): Promise<ProfileEntity> {
-    const exists = await this.table.findOne({ where: { userId } });
+  async addProfile(@Args() { id, ...context }: InsertProfile): Promise<ProfileEntity> {
+    // const exists = await this.table.findOne({ where: { userId } });
 
-    if (exists) {
-      throw new Error(`Record ${userId} already exists`);
-    }
+    // if (exists) {
+    //   throw new Error(`Record ${userId} already exists`);
+    // }
 
     await getConnection("postgres")
       .createQueryBuilder()
       .insert()
       .into(ProfileEntity)
-      .values({ userId, ...context })
+      .values({ id, ...context })
       .execute();
 
-    return this.table.findOne({ where: { userId } });
+    return this.table.findOne({ where: { id } });
   }
 }

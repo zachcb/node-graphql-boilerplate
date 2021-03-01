@@ -3,13 +3,13 @@ import { PostEntity } from "@/database/entities/post";
 import { SharedSelectInput, Sort } from "@/resolvers/bin/inputs/input";
 
 @InputType()
-export class Where {
+export class WherePost {
   @Field({ nullable: true })
   name?: string;
 }
 
 @InputType()
-export class Order {
+export class OrderPost {
   @Field(() => Sort, { nullable: true })
   name?: Sort;
 
@@ -18,7 +18,7 @@ export class Order {
 }
 
 @ArgsType()
-export class Insert implements Partial<PostEntity> {
+export class InsertPost implements Partial<PostEntity> {
   @Field() userId: number;
 
   @Field() title: string;
@@ -29,10 +29,10 @@ export class Insert implements Partial<PostEntity> {
 }
 
 @ArgsType()
-export class Select extends SharedSelectInput {
-  @Field(() => Where, { nullable: true })
-  where?: Where;
+export class SelectPost extends SharedSelectInput {
+  @Field(() => WherePost, { nullable: true })
+  where?: WherePost;
 
-  @Field(() => Order, { nullable: true })
-  order?: Order;
+  @Field(() => OrderPost, { nullable: true })
+  order?: OrderPost;
 }

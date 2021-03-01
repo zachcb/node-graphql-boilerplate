@@ -7,8 +7,8 @@ module.exports = {
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DATABASE,
   ssl: process.env.NODE_ENV === "production",
-  synchronize: process.env.NODE_ENV === "production",
-  dropSchema: false,
+  synchronize: process.env.NODE_ENV !== "production",
+  dropSchema: true,
   cache: true,
   logging: process.env.NODE_ENV !== "production",
   entities: [

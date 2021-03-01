@@ -15,28 +15,33 @@ import {
   orderBy: { id: "DESC" },
 })
 export class PostEntity extends BaseEntity {
-    @PrimaryGeneratedColumn()
+    @Field(() => ID)
+    @Index({ unique: true })
+    @PrimaryGeneratedColumn("increment", { name: "id" })
     id: number;
 
     @Field(() => ID)
     @Index({ unique: true })
-    @Column()
+    @Column({ name: "userId" })
     userId: number
 
-    @Column()
+    @Field()
+    @Column({ name: "title" })
     title: string;
 
-    @Column()
+    @Field()
+    @Column({ name: "description" })
     description: string;
 
-    @Column()
+    @Field()
+    @Column({ name: "content" })
     content: string;
 
     @Field()
-    @CreateDateColumn({ name: "CreatedAt" })
+    @CreateDateColumn({ name: "createdAt" })
     createdAt: Date;
 
     @Field()
-    @UpdateDateColumn({ name: "UpdatedAt" })
+    @UpdateDateColumn({ name: "updatedAt" })
     updatedAt: Date;
 }

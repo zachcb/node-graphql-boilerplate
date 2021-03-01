@@ -3,7 +3,7 @@ import {
 } from "type-graphql";
 import { getConnection, getRepository } from "typeorm";
 import { PostEntity } from "@/database/entities/post";
-import { Select } from "./input";
+import { SelectPost, InsertPost } from "./input";
 
 @Resolver()
 export class PostResolver {
@@ -12,7 +12,7 @@ export class PostResolver {
   @Query(() => [PostEntity], { nullable: true })
   async posts(@Args() {
     where, take, skip, order,
-  }: Select): Promise<PostEntity[]> {
+  }: SelectPost): Promise<PostEntity[]> {
     return this.table.find({
       where: { ...where },
       order: { ...order },
@@ -22,7 +22,7 @@ export class PostResolver {
   }
 
   @Mutation(() => PostEntity, { nullable: true })
-  async addPost(@Args() { title }: PostEntity): Promise<PostEntity> {
+  async addPost(@Args() { title }: InsertPost): Promise<PostEntity> {
     const exists = await this.table.findOne({ where: { title } });
 
     if (exists) {

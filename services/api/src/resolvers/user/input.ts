@@ -1,15 +1,19 @@
 import { ArgsType, Field, InputType } from "type-graphql";
 import { UserEntity } from "@/database/entities/user";
 import { SharedSelectInput, Sort } from "@/resolvers/bin/inputs/input";
+import { ProfileEntity } from "@/database/entities/profile";
 
 @InputType()
-export class Where {
+export class WhereUser {
   @Field({ nullable: true })
   name?: string;
+
+  @Field({ nullable: true })
+  profileId?: number;
 }
 
 @InputType()
-export class Order {
+export class OrderUser {
   @Field(() => Sort, { nullable: true })
   name?: Sort;
 
@@ -18,15 +22,15 @@ export class Order {
 }
 
 @ArgsType()
-export class Insert implements Partial<UserEntity> {
+export class InsertUser implements Partial<UserEntity> {
   @Field() name: string;
 }
 
 @ArgsType()
-export class Select extends SharedSelectInput {
-  @Field(() => Where, { nullable: true })
-  where?: Where;
+export class SelectUser extends SharedSelectInput {
+  @Field(() => WhereUser, { nullable: true })
+  where?: WhereUser;
 
-  @Field(() => Order, { nullable: true })
-  order?: Order;
+  @Field(() => OrderUser, { nullable: true })
+  order?: OrderUser;
 }
