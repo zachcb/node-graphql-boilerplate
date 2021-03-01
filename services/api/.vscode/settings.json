@@ -43,10 +43,6 @@
     },
     "eslint.validate": ["typescript"],
     "typescript.referencesCodeLens.enabled": true,
-    "appService.zipIgnorePattern": [
-      ".vscode{,/**}"
-    ],
-    "appService.deploySubpath": "",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     }

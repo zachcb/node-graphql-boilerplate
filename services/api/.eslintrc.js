@@ -13,6 +13,7 @@ module.exports = {
   ],
   parserOptions: {
     project: './tsconfig.json',
+    tsconfigRootDir: "./"
   },
   extends: [
     'eslint:recommended',
@@ -47,6 +48,7 @@ module.exports = {
       node: {
         extensions: ['.ts'],
       },
+      typescript: {}
     },
   },
 };
