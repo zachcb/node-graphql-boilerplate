@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "description": "&_&",
   "main": "src/main.ts",
+  "license": "MIT",
   "scripts": {
-    "start": "npm run build && npm run serve",
+    "start": "npm run serve:prod",
     "build": "npm run build-ts && npm run lint",
-    "serve": "node .build/main.js",
-    "start:dev": "nodemon",
+    "serve:prod": "node .build/main.js",
+    "serve:dev": "nodemon",
     "lint": "eslint 'src/**/*.ts' --ignore-pattern node_modules/",
     "build-ts": "tsc"
   },
