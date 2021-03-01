@@ -2,7 +2,7 @@ import {
   Args, Mutation, Query, Resolver,
 } from "type-graphql";
 import { getConnection, getRepository } from "typeorm";
-import { User } from "../database/models/user";
+import { User } from "../database/entities/user";
 import { InsertUser, SelectUser } from "./user";
 
 @Resolver()

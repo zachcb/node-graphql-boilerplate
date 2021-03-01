@@ -2,7 +2,7 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "type-graphql";
 import cors from "cors";
-import { createInterface } from "./database";
+import { createInterface } from "@/database";
 import { logger } from "./utils/logger";
 import { config } from "./config";
 

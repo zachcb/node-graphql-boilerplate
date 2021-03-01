@@ -9,20 +9,21 @@ import {
   OneToOne,
   OneToMany,
   JoinColumn,
+  BaseEntity,
 } from "typeorm";
 import { Profile } from "./profile";
 import { Post } from "./post";
 
 @ObjectType()
-@Entity()
-export class User {
+@Entity({ name: "User", schema: "config", orderBy: { id: "DESC" } })
+export class User extends BaseEntity {
     @Field(() => ID)
     @Index({ unique: true })
     @PrimaryGeneratedColumn("increment", { name: "Id" })
     id: number;
 
     @Field()
-    @Column()
+    @Column({ name: "Name", unique: true, nullable: false })
     name: string;
 
     @OneToOne(() => Profile)

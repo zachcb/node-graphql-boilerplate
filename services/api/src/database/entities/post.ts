@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Column,
+  BaseEntity,
 } from "typeorm";
 
 @ObjectType()
@@ -12,7 +13,7 @@ import {
   name: "Post",
   orderBy: { id: "DESC" },
 })
-export class Post {
+export class Post extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 

@@ -14,9 +14,9 @@ import {
   Any,
   getConnection,
 } from "typeorm";
-import { User } from "./models/user";
-import { Profile } from "./models/profile";
-import { Post } from "./models/post";
+import { User } from "./entities/user";
+import { Profile } from "./entities/profile";
+import { Post } from "./entities/post";
 import { config } from "../config";
 
 const connectionOptions: Array<ConnectionOptions> = [{
@@ -30,8 +30,8 @@ const connectionOptions: Array<ConnectionOptions> = [{
   ssl: config.PRODUCTION,
   synchronize: true,
   // logging: !config.PRODUCTION,
-  // entities: [`${__dirname}/database/models/**/*.{js,ts}`],
-  entities: [User, Profile, Post],
+  // entities: [`${__dirname}/database/entities/**/*.{js,ts}`],
+  // entities: [User, Profile, Post],
   dropSchema: false,
   cache: true,
 }];

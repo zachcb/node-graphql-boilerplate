@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Column,
+  BaseEntity,
 } from "typeorm";
 
 @ObjectType()
@@ -12,7 +13,7 @@ import {
   name: "Profile",
   orderBy: { id: "DESC" },
 })
-export class Profile {
+export class Profile extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 

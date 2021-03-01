@@ -1,6 +1,6 @@
 import { ArgsType, Field, InputType } from "type-graphql";
+import { User } from "@/database/entities/user";
 import { SharedSelectInput, SortOrder } from "./shared/Input";
-import { User } from "../database/models/user";
 
 @InputType()
 export class WhereUser implements Partial<User> {
