@@ -10,12 +10,16 @@ import {
   OneToMany,
   JoinColumn,
   BaseEntity,
+  BeforeUpdate,
 } from "typeorm";
 import { Profile } from "./profile";
 import { Post } from "./post";
 
 @ObjectType()
-@Entity({ name: "User", schema: "config", orderBy: { id: "DESC" } })
+@Entity({
+  name: "User",
+  orderBy: { id: "DESC" },
+})
 export class User extends BaseEntity {
     @Field(() => ID)
     @Index({ unique: true })
@@ -41,4 +45,9 @@ export class User extends BaseEntity {
     @Field()
     @UpdateDateColumn({ name: "UpdatedAt" })
     updatedAt: Date;
+
+    @BeforeUpdate()
+    updateDates() {
+      this.updatedAt = new Date();
+    }
 }

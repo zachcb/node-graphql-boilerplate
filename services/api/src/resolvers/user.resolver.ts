@@ -2,7 +2,7 @@ import {
   Args, Mutation, Query, Resolver,
 } from "type-graphql";
 import { getConnection, getRepository } from "typeorm";
-import { User } from "../database/entities/user";
+import { User } from "@/database/entities/user";
 import { InsertUser, SelectUser } from "./user";
 
 @Resolver()
@@ -10,8 +10,12 @@ export class UserResolver {
   private table = getRepository(User, "postgres");
 
   @Query(() => [User], { nullable: true })
-  async users(): Promise<User[]> {
-    return this.table.find();
+  async users(@Args() {
+    where, take, skip, order,
+  }: SelectUser): Promise<User[]> {
+    return this.table.find({
+      where: { ...where }, order: { ...order }, skip, take,
+    });
   }
 
   @Mutation(() => User, { nullable: true })

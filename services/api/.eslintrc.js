@@ -32,14 +32,19 @@ module.exports = {
     'quotes': ["warn", "double"],
     // note you must disable the base rule as it can report incorrect errors
     'no-shadow': 'off',
+    'class-methods-use-this': 0,
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0
   },
   overrides: [
     {
       files: ['*.ts', '*.tsx'], // Your TypeScript files extension
       parserOptions: {
-        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+        project: [
+          './tsconfig.json',
+          './ormconfig.js'
+        ], // Specify it only for TypeScript files
       },
     }
   ],

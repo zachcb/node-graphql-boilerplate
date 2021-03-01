@@ -8,33 +8,8 @@
 import {
   Connection,
   createConnection,
-  useContainer,
-
-  ConnectionOptions,
-  Any,
   getConnection,
 } from "typeorm";
-import { User } from "./entities/user";
-import { Profile } from "./entities/profile";
-import { Post } from "./entities/post";
-import { config } from "../config";
-
-const connectionOptions: Array<ConnectionOptions> = [{
-  type: "postgres",
-  name: config.PG_NAME,
-  host: config.PG_HOST,
-  database: config.PG_DATABASE,
-  port: config.PG_PORT,
-  username: config.PG_USER,
-  password: config.PG_PASSWORD,
-  ssl: config.PRODUCTION,
-  synchronize: true,
-  // logging: !config.PRODUCTION,
-  // entities: [`${__dirname}/database/entities/**/*.{js,ts}`],
-  // entities: [User, Profile, Post],
-  dropSchema: false,
-  cache: true,
-}];
 
 type PostgresInterface = {
   connection: Record<string, unknown>;
@@ -55,10 +30,7 @@ export function createInterface(): PostgresInterface {
     connection: {},
 
     connect: async () => {
-      const [postgresConnectionOptions] = connectionOptions;
-      this.connection = await createConnection({
-        ...postgresConnectionOptions,
-      });
+      this.connection = await createConnection("postgres");
     },
 
     getConnection: async (name): Promise<Connection> => {
