@@ -16,7 +16,7 @@ export const main = async (): Promise<void> => {
   PGInterface.connect();
 
   const schema = await buildSchema({
-    resolvers: [`${__dirname}/resolvers/**/*.resolver.?s`],
+    resolvers: [`${__dirname}/resolvers/**/*{.js,.ts}`],
     globalMiddlewares: [],
   });
 

@@ -1,12 +1,12 @@
 import { IsNumber } from "class-validator";
 import { ArgsType, Field, registerEnumType } from "type-graphql";
 
-export enum SortOrder {
+export enum Sort {
   ASC = "ASC",
   DESC = "DESC"
 }
 
-registerEnumType(SortOrder, { name: "SortOrder" });
+registerEnumType(Sort, { name: "Sort" });
 
 @ArgsType()
 export class SharedSelectInput {
