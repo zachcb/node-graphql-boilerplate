@@ -32,7 +32,7 @@ const connectionOptions: Array<ConnectionOptions> = [{
   // logging: !config.PRODUCTION,
   // entities: [`${__dirname}/database/models/**/*.{js,ts}`],
   entities: [User, Profile, Post],
-  dropSchema: true,
+  dropSchema: false,
   cache: true,
 }];
 

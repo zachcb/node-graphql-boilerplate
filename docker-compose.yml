@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
     server:
@@ -33,14 +33,13 @@ services:
             POSTGRES_DATABASE: ${PG_DATABASE}
             POSTGRES_USER: ${PG_USER}
             POSTGRES_PASSWORD: ${PG_PASSWORD}
-            PGDATA: /var/lib/postgresql/data
-        # command: "postgres -c config_file=/usr/local/etc/postgres/postgres.conf"
+            # command: "postgres -c config_file=/usr/local/etc/postgres/postgres.conf"
         ports:
             - "${PG_PORT}:${PG_PORT}"
         volumes:
             # - "./docker/postgres.conf:/usr/local/etc/postgres/postgres.conf"
-            - "/var/run/postgres/postgres.sock"
-            - "./docker/data/postgres:/var/lib/postgresql/data"
+            - /var/run/postgres/postgres.sock
+            - pgdata:/var/lib/postgresql/data
         networks:
             - postgres
         restart: unless-stopped
@@ -69,10 +68,10 @@ services:
             - redis
         ports:
             - ${RDC_PORT}:${RDC_PORT}
+
 volumes:
-    redis:
     pgdata:
-        driver: local
+    redis:
     
 networks:
     postgres:
