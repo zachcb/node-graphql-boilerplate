@@ -1,5 +1,4 @@
 {
-  "name": "node-graphql-boilerplate",
   "version": "0.1.0",
   "description": "&_&",
   "main": "src/main.ts",
@@ -21,20 +20,16 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
-    "graphql-voyager": "^1.0.0-rc.31",
-    "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "^1.1.1",
-    "typeorm": "^0.2.31"
+    "type-graphql": "^1.1.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
     "@types/graphql": "^14.5.0",
     "@types/node": "^14.14.31",
-    "@types/pg": "^7.14.5",
-    "@typescript-eslint/eslint-plugin": "^4.14.2",
-    "@typescript-eslint/parser": "^4.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.12.1",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -42,6 +37,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.7",
+    "prisma": "^3.5.0",
     "ts-node": "^9.0.0",
     "tslint": "^6.1.3",
     "typescript": "^4.0.5"

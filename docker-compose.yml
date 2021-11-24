@@ -21,29 +21,18 @@ services:
         build:
             context: .
             dockerfile: ./docker/Dockerfile.dev
-            # target: development
-            # args:
-            #     mode: development
 
-    postgres:
-        container_name: gql-test-postgres
-        image: postgres:latest
-        env_file: .env
-        environment:
-            POSTGRES_DATABASE: ${PG_DATABASE}
-            POSTGRES_USER: ${PG_USER}
-            POSTGRES_PASSWORD: ${PG_PASSWORD}
-            # command: "postgres -c config_file=/usr/local/etc/postgres/postgres.conf"
-        ports:
-            - "${PG_PORT}:${PG_PORT}"
+    # https://github.com/alexmacarthur/local-docker-db/blob/master/mongo/docker-compose.yml
+    db:
+        image: mongo:latest
         volumes:
-            # - "./docker/postgres.conf:/usr/local/etc/postgres/postgres.conf"
-            - /var/run/postgres/postgres.sock
-            - pgdata:/var/lib/postgresql/data
-        networks:
-            - postgres
-        restart: unless-stopped
-   
+            - dbdata:/data/db
+        ports:
+            - 27017:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+    
     redis:
         container_name: gql-test-redis
         image: redis
@@ -70,7 +59,7 @@ services:
             - ${RDC_PORT}:${RDC_PORT}
 
 volumes:
-    pgdata:
+    dbdata:
     redis:
     
 networks:

@@ -3,12 +3,11 @@ FROM node
 # Create api directory
 WORKDIR /usr/src/app
 
-# Package and yarn lock for npm install
+# Package lock for npm install
 COPY services/api/package.json ./
-COPY services/api/yarn.lock ./
 
 # Install packages
-RUN yarn
+RUN npm install
 
 # Bundle api source
 COPY services/api/ .
@@ -25,4 +24,4 @@ EXPOSE 5000
 
 # Wait for it docker entry
 # ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["yarn", "serve:dev"]
+CMD ["npm run", "serve:dev"]

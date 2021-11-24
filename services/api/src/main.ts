@@ -4,7 +4,6 @@ import http from "http";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { RedisCache } from "apollo-server-cache-redis";
-import { express as voyagerMiddleware } from "graphql-voyager/middleware";
 
 import { createInterface } from "@/database";
 import { IContext } from "@/bin/types/IContext";
@@ -38,8 +37,6 @@ export const main = async (): Promise<void> => {
     origin: `${config.ORIGIN_URL}`,
     credentials: false,
   };
-
-  app.use("/voyager", voyagerMiddleware({ endpointUrl: "/graphql" }));
 
   app.use(cors());
 

@@ -1,20 +1,16 @@
 {
-  "compileOnSave": false,
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "sourceRoot": "src",
-    "outDir": ".build",
+    "composite": true,
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": ".",
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "removeComments": true,
-    "lib": ["esnext", "esnext.asynciterable", "dom"],
+    "isolatedModules": true,
+    "downlevelIteration": true,
+    "strictNullChecks": false,
+    "baseUrl": ".",
     "types": ["node"],
     "paths": {
       "*": [
@@ -26,8 +22,6 @@
       ]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "migrations/*.js"
-  ]
+  "include": ["src/**/*", "package.json", ".eslintrc.js"],
+  "exclude": ["node_modules"]
 }
