@@ -4,7 +4,9 @@
     "composite": true,
     "declaration": true,
     "outDir": "dist",
-    "rootDir": ".",
+    "rootDir": "src",
+    "target": "ES6",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
@@ -12,6 +14,7 @@
     "strictNullChecks": false,
     "baseUrl": ".",
     "types": ["node"],
+    "typeRoots": ["./src/bin/types", "./node_modules/@types"],
     "paths": {
       "*": [
         "node_modules/*",
@@ -22,6 +25,6 @@
       ]
     }
   },
-  "include": ["src/**/*", "package.json", ".eslintrc.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "package.json", ".eslintrc.js", "prisma"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -12,6 +12,7 @@
     "build-ts": "tsc"
   },
   "dependencies": {
+    "@prisma/client": "^3.5.0",
     "apollo-server-cache-redis": "^1.2.3",
     "apollo-server-express": "^2.21.0",
     "boxen": "^5.0.0",
@@ -20,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
+    "graphql-scalars": "^1.13.6",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   },

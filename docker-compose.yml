@@ -1,26 +1,26 @@
 version: "3.7"
 
 services:
-    server:
-        container_name: gql-test-server
-        env_file: .env
-        environment:
-            DEPEND_HOST: postgres
-            DEPEND_PORT: ${PG_PORT}
-        volumes:
-            - ./services/api/src:/usr/src/app/src:delegated
-            - /usr/src/app/node_modules
-        depends_on:
-            - postgres
-            - redis
-        networks:
-            - postgres
-            - redis
-        ports:
-            - ${PORT}:${PORT}
-        build:
-            context: .
-            dockerfile: ./docker/Dockerfile.dev
+    # server:
+    #     container_name: gql-test-server
+    #     env_file: .env
+    #     environment:
+    #         DEPEND_HOST: postgres
+    #         DEPEND_PORT: ${PG_PORT}
+    #     volumes:
+    #         - ./services/api/src:/usr/src/app/src:delegated
+    #         - /usr/src/app/node_modules
+    #     depends_on:
+    #         - postgres
+    #         - redis
+    #     networks:
+    #         - postgres
+    #         - redis
+    #     ports:
+    #         - ${PORT}:${PORT}
+    #     build:
+    #         context: .
+    #         dockerfile: ./docker/Dockerfile.dev
 
     # https://github.com/alexmacarthur/local-docker-db/blob/master/mongo/docker-compose.yml
     db:
@@ -31,32 +31,33 @@ services:
             - 27017:27017
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: password
+            MONGO_INITDB_ROOT_PASSWORD: falcon
+            MONGO_INITDB_DATABASE: sandbox
     
-    redis:
-        container_name: gql-test-redis
-        image: redis
-        command: redis-server /usr/local/etc/redis/redis.conf
-        volumes:
-            - redis:/usr/local/etc/redis/data
-            - ./docker/configs/redis.conf:/usr/local/etc/redis/redis.conf
-        networks:
-            - redis
-        ports:
-            - ${RD_PORT}:${RD_PORT}
-        expose:
-            - ${RD_PORT}
+    # redis:
+    #     container_name: gql-test-redis
+    #     image: redis
+    #     command: redis-server /usr/local/etc/redis/redis.conf
+    #     volumes:
+    #         - redis:/usr/local/etc/redis/data
+    #         - ./docker/configs/redis.conf:/usr/local/etc/redis/redis.conf
+    #     networks:
+    #         - redis
+    #     ports:
+    #         - ${RD_PORT}:${RD_PORT}
+    #     expose:
+    #         - ${RD_PORT}
 
-    redis-commander:
-        container_name: gql-test-redis-commander
-        hostname: redis-commander
-        image: rediscommander/redis-commander:latest
-        environment:
-            - REDIS_HOSTS=local:redis:${RD_PORT}
-        networks:
-            - redis
-        ports:
-            - ${RDC_PORT}:${RDC_PORT}
+    # redis-commander:
+    #     container_name: gql-test-redis-commander
+    #     hostname: redis-commander
+    #     image: rediscommander/redis-commander:latest
+    #     environment:
+    #         - REDIS_HOSTS=local:redis:${RD_PORT}
+    #     networks:
+    #         - redis
+    #     ports:
+    #         - ${RDC_PORT}:${RDC_PORT}
 
 volumes:
     dbdata:

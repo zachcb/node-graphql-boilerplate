@@ -5,15 +5,14 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { RedisCache } from "apollo-server-cache-redis";
 
-import { createInterface } from "@/database";
+import { databaseInterface } from "@/database";
 import { IContext } from "@/bin/types/IContext";
 import { logger } from "./utils/logger";
 import { config } from "./config";
 import { createSchema } from "./schema";
 
 export const main = async (): Promise<void> => {
-  const PGInterface = createInterface();
-  PGInterface.connect();
+  await databaseInterface.connect();
 
   const schema = await createSchema();
 
