@@ -1,25 +1,31 @@
 FROM node:latest
 
+RUN npm config set unsafe-perm true
+
+
 # Update the Node image to keep up with potential security issues
 RUN apt-get clean && apt-get -y update && apt-get -y dist-upgrade
 
 # Create app and enter the root directory
-RUN mkdir -p /app
-WORKDIR /app
+RUN mkdir -p /srv/app/services/client/
+WORKDIR /srv/app
 
 # Copy root files
-COPY package*.json ./
-COPY .eslintrc.js ./
-COPY tsconfig.json ./
-COPY services/client/package*.json services/client/
+COPY ./package*.json ./
+COPY ./.eslintrc.js ./
+COPY ./tsconfig.json ./
+COPY ./services/client/package*.json ./services/client/
+RUN pwd
+RUN chown -Rh $user:$user .
+USER $user
 
 RUN npm install
 
-COPY services/client services/client
-WORKDIR services/client
-RUN npm install
+COPY ./services/client ./services/client
+RUN cd ./services/client && npm install
+RUN cd ./services/client && npm run build
 
 EXPOSE 3000
 
 # Running the app
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev:client"]

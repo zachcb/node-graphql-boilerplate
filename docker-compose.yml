@@ -1,19 +1,14 @@
-version: "3"
+version: "3.7"
 
 services:
     client:
         container_name: gql-test-client
         env_file: .env
-        # restart: always
-        environment:
-            DEPEND_HOST: mongo
-            DEPEND_PORT: ${PG_PORT}
         volumes:
-            - ./services/client:/app/services/client
-            - /app/services/client/node_modules
-            - /app/services/client/.next
-        # depends_on:
-        #     - api
+            - ./services/client:/srv/app/services/client
+            - ./node_modules:/srv/app/node_modules
+            - ./services/client/node_modules:/srv/app/services/client/node_modules
+            - ./services/client/.next:/app/services/client/.next
         ports:
             - ${CLIENT_PORT}:${CLIENT_PORT}
         build:

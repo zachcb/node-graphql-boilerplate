@@ -1,6 +1,1 @@
-node_modules
-npm-debug.log
-dist/
-.build/
-.vscode/
-docker/data/
+**/node_modules
