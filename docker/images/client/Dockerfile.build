@@ -1,0 +1,26 @@
+FROM node:latest
+
+# Create api directory
+WORKDIR /usr/src/app
+
+# Install api dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package.json ./
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn
+
+# Bundle api source
+COPY src/ .
+
+# Add docker util files
+COPY ./docker/utils/docker-entrypoint.sh ./ 
+COPY ./docker/utils/wait-for-it.sh ./
+
+# Set permissions to execute
+RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
+
+# build api for production with minification
+RUN npm run build

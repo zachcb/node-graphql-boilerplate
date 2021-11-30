@@ -1,33 +1,32 @@
 {
-  "compileOnSave": false,
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
+    "composite": true,
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "target": "ES6",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "sourceRoot": "src",
-    "outDir": ".build",
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "removeComments": true,
-    "lib": ["esnext", "esnext.asynciterable", "dom"],
+    "isolatedModules": true,
+    "downlevelIteration": true,
+    "strictNullChecks": false,
+    "baseUrl": ".",
     "types": ["node"],
+    "typeRoots": ["./src/bin/types", "./node_modules/@types"],
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/bin/types/*"
-      ],
       "@/*": [
         "src/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts",
-    "migrations/*.js"
-  ]
+    "**/*.ts",
+    "**/*.tsx",
+    "package.json",
+    ".eslintrc.js",
+    "src/prisma/**/*"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

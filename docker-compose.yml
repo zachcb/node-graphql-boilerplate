@@ -1,79 +1,90 @@
-version: "3.7"
+version: "3"
 
 services:
-    server:
-        container_name: gql-test-server
+    client:
+        container_name: gql-test-client
         env_file: .env
+        # restart: always
         environment:
-            DEPEND_HOST: postgres
+            DEPEND_HOST: mongo
             DEPEND_PORT: ${PG_PORT}
         volumes:
-            - ./services/api/src:/usr/src/app/src:delegated
-            - /usr/src/app/node_modules
-        depends_on:
-            - postgres
-            - redis
-        networks:
-            - postgres
-            - redis
+            - ./services/client:/app/services/client
+            - /app/services/client/node_modules
+            - /app/services/client/.next
+        # depends_on:
+        #     - api
         ports:
-            - ${PORT}:${PORT}
+            - ${CLIENT_PORT}:${CLIENT_PORT}
         build:
             context: .
-            dockerfile: ./docker/Dockerfile.dev
-            # target: development
-            # args:
-            #     mode: development
+            dockerfile: ./docker/images/client/Dockerfile.dev
+    # api:
+    #     container_name: gql-test-api
+    #     env_file: .env
+    #     environment:
+    #         DEPEND_HOST: mongo
+    #         DEPEND_PORT: 27017
+    #     volumes:
+    #         - ./services/api/src:/usr/src/app/src:delegated
+    #         - /usr/src/app/node_modules
+    #     depends_on:
+    #         - mongo
+    #         - redis
+    #     networks:
+    #         - mongo
+    #         - redis
+    #     ports:
+    #         - ${API_PORT}:${API_PORT}
+    #     build:
+    #         context: .
+    #         dockerfile: ./docker/images/api/Dockerfile.dev
 
-    postgres:
-        container_name: gql-test-postgres
-        image: postgres:latest
-        env_file: .env
-        environment:
-            POSTGRES_DATABASE: ${PG_DATABASE}
-            POSTGRES_USER: ${PG_USER}
-            POSTGRES_PASSWORD: ${PG_PASSWORD}
-            # command: "postgres -c config_file=/usr/local/etc/postgres/postgres.conf"
-        ports:
-            - "${PG_PORT}:${PG_PORT}"
-        volumes:
-            # - "./docker/postgres.conf:/usr/local/etc/postgres/postgres.conf"
-            - /var/run/postgres/postgres.sock
-            - pgdata:/var/lib/postgresql/data
-        networks:
-            - postgres
-        restart: unless-stopped
-   
-    redis:
-        container_name: gql-test-redis
-        image: redis
-        command: redis-server /usr/local/etc/redis/redis.conf
-        volumes:
-            - redis:/usr/local/etc/redis/data
-            - ./docker/configs/redis.conf:/usr/local/etc/redis/redis.conf
-        networks:
-            - redis
-        ports:
-            - ${RD_PORT}:${RD_PORT}
-        expose:
-            - ${RD_PORT}
+    # https://github.com/alexmacarthur/local-docker-db/blob/master/mongo/docker-compose.yml
+    # mongo:
+    #     container_name: gql-test-mongo
+    #     image: mongo:latest
+    #     volumes:
+    #         - dbdata:/data/db
+    #     ports:
+    #         - 27017:27017
+    #     environment:
+    #         MONGO_INITDB_ROOT_USERNAME: root
+    #         MONGO_INITDB_ROOT_PASSWORD: falcon
+    #         MONGO_INITDB_DATABASE: sandbox
+    
+    # redis:
+    #     container_name: gql-test-redis
+    #     image: redis
+    #     command: redis-server /usr/local/etc/redis/redis.conf
+    #     volumes:
+    #         - redis:/usr/local/etc/redis/data
+    #         - ./docker/configs/redis.conf:/usr/local/etc/redis/redis.conf
+    #     networks:
+    #         - redis
+    #     ports:
+    #         - ${RD_PORT}:${RD_PORT}
+    #     expose:
+    #         - ${RD_PORT}
 
-    redis-commander:
-        container_name: gql-test-redis-commander
-        hostname: redis-commander
-        image: rediscommander/redis-commander:latest
-        environment:
-            - REDIS_HOSTS=local:redis:${RD_PORT}
-        networks:
-            - redis
-        ports:
-            - ${RDC_PORT}:${RDC_PORT}
+    # redis-commander:
+    #     container_name: gql-test-redis-commander
+    #     hostname: redis-commander
+    #     image: rediscommander/redis-commander:latest
+    #     environment:
+    #         - REDIS_HOSTS=local:redis:${RD_PORT}
+    #     networks:
+    #         - redis
+    #     ports:
+    #         - ${RDC_PORT}:${RDC_PORT}
 
 volumes:
-    pgdata:
+    dbdata:
     redis:
     
 networks:
+    mongo:
+        driver: bridge
     postgres:
         driver: bridge
     redis:
