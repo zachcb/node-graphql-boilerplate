@@ -38,10 +38,12 @@
       "extensions": [
         ".html",
         ".js",
-        ".jsx"
+        ".jsx",
+        ".ts",
+        ".tsx"
       ],
     },
-    "eslint.validate": ["typescript"],
+    "eslint.validate": ["javascript", "typescript", "typescript-react"],
     // "typescript.referencesCodeLens.enabled": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true

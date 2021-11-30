@@ -3,16 +3,20 @@
  *
 */
 
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 
-export type ConnectionContext = PrismaClient
-
-export const databaseInterface = {
-  context: new PrismaClient(),
-  connect: async function () {
-    await this.context.$connect()
-  },
-  disconnect: async function () {
-    await this.context.$disconnect()
-  }
+export type DatabaseInterface = {
+  database: PrismaClient
+  connect: () => void
+  disconnect: () => void
 }
+
+export const databaseInterface: DatabaseInterface = {
+  database: new PrismaClient(),
+  async connect() {
+    await this.database.$connect();
+  },
+  async disconnect() {
+    await this.database.$disconnect();
+  },
+};

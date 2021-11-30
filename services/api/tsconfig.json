@@ -16,15 +16,17 @@
     "types": ["node"],
     "typeRoots": ["./src/bin/types", "./node_modules/@types"],
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/bin/types/*"
-      ],
       "@/*": [
         "src/*"
       ]
     }
   },
-  "include": ["src/**/*", "package.json", ".eslintrc.js", "prisma"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "package.json",
+    ".eslintrc.js",
+    "src/prisma/**/*"
+  ],
   "exclude": ["node_modules", "dist"]
 }

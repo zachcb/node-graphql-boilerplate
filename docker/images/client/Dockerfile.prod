@@ -1,0 +1,11 @@
+FROM node:latest
+
+# Create api directory
+WORKDIR /usr/src/app
+
+COPY --from=0 /usr/src/app/ .
+
+EXPOSE 5000
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["yarn", "start"]

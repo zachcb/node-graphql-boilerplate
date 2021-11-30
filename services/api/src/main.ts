@@ -6,7 +6,7 @@ import { ApolloServer } from "apollo-server-express";
 import { RedisCache } from "apollo-server-cache-redis";
 
 import { databaseInterface } from "@/database";
-import { IContext } from "@/bin/types/IContext";
+// import { IContext } from "@/bin/types/IContext";
 import { logger } from "./utils/logger";
 import { config } from "./config";
 import { createSchema } from "./schema";
@@ -18,9 +18,8 @@ export const main = async (): Promise<void> => {
 
   const apolloServer = new ApolloServer({
     schema,
-
-    context: ({ req, res }): IContext => ({ req, res }),
-    playground: !config.PRODUCTION,
+    context: databaseInterface,
+    // playground: !config.PRODUCTION,
     cache: new RedisCache({
       host: config.RD_HOST,
       port: config.RD_PORT,

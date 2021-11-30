@@ -1,6 +1,6 @@
-import { GraphQLScalarType } from 'graphql'
+import { GraphQLScalarType } from "graphql";
 import { buildSchema } from "type-graphql";
-import { DateTimeResolver } from 'graphql-scalars'
+import { DateTimeResolver } from "graphql-scalars";
 
 import { PostResolver } from "@/resolvers/Post";
 import { UserResolver } from "@/resolvers/User";
@@ -12,7 +12,7 @@ export const createSchema = () => buildSchema({
   ],
   scalarsMap: [{
     type: GraphQLScalarType,
-    scalar: DateTimeResolver
+    scalar: DateTimeResolver,
   }],
   globalMiddlewares: [],
 });

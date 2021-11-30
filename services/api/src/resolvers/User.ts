@@ -1,4 +1,4 @@
-import 'reflect-metadata'
+import "reflect-metadata";
 import {
   Resolver,
   Query,
@@ -10,77 +10,77 @@ import {
   Int,
   InputType,
   Field,
-} from 'type-graphql'
-import { Post } from '@/database/entities/Post'
-import { User } from '@/database/entities/User'
-import { ConnectionContext } from '@/database/'
-import { PostCreateInput } from '@/resolvers/Post'
+} from "type-graphql";
+import { Post } from "@/database/entities/Post";
+import { User } from "@/database/entities/User";
+import { DatabaseInterface } from "@/database/";
+import { PostCreateInput } from "@/resolvers/Post";
 
 @InputType()
 class UserUniqueInput {
   @Field({ nullable: true })
-  id: number
+    id: string;
 
   @Field({ nullable: true })
-  email: string
+    email: string;
 }
 
 @InputType()
 class UserCreateInput {
   @Field()
-  email: string
+    email: string;
 
   @Field({ nullable: true })
-  name: string
+    firstName: string;
 
   @Field((type) => [PostCreateInput], { nullable: true })
-  posts: [PostCreateInput]
+    posts: [PostCreateInput];
 }
 
 @Resolver(User)
 export class UserResolver {
   @FieldResolver()
-  async posts(@Root() user: User, @Ctx() ctx: ConnectionContext): Promise<Post[]> {
-    return ctx.context.user
+  async posts(@Root() user: User, @Ctx() ctx: DatabaseInterface): Promise<Post[]> {
+    return ctx.database.user
       .findUnique({
         where: {
           id: user.id,
         },
       })
-      .posts()
+      .posts();
   }
 
   @Mutation((returns) => User)
   async signupUser(
-    @Arg('data') data: UserCreateInput,
-    @Ctx() ctx: ConnectionContext,
+    @Arg("data") data: UserCreateInput,
+    @Ctx() ctx: DatabaseInterface,
   ): Promise<User> {
     const postData = data.posts?.map((post) => {
-      return { title: post.title, content: post.content || undefined }
-    })
+      return { title: post.title, content: post.content || undefined };
+    });
 
-    return ctx.context.user.create({
+    return ctx.database.user.create({
       data: {
         email: data.email,
-        name: data.name,
+        firstName: data.firstName,
         posts: {
           create: postData,
         },
       },
-    })
+    });
   }
 
   @Query(() => [User])
-  async allUsers(@Ctx() ctx: ConnectionContext) {
-    return ctx.context.user.findMany()
+  async allUsers(@Ctx() ctx: DatabaseInterface) {
+    return ctx.database.user.findMany();
   }
 
   @Query((returns) => [Post], { nullable: true })
   async draftsByUser(
-    @Arg('userUniqueInput') userUniqueInput: UserUniqueInput,
-    @Ctx() ctx: ConnectionContext,
+    @Arg("userUniqueInput") userUniqueInput: UserUniqueInput,
+    @Ctx() ctx: DatabaseInterface,
   ) {
-    return ctx.context.user
+    return ctx.database.user
       .findUnique({
         where: {
           id: userUniqueInput.id || undefined,
@@ -91,6 +91,6 @@ export class UserResolver {
         where: {
           published: false,
         },
-      })
+      });
   }
 }

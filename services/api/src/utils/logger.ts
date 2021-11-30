@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import boxen from "boxen";
+import boxen, { Options } from "boxen";
 
 const {
   log, warn, error, table,
@@ -10,7 +10,7 @@ type LoggerOptions = {
   box?: boolean;
 }
 
-const boxOptions: boxen.Options = {
+const boxOptions: Options = {
   padding: 1,
   margin: 1,
   borderStyle: "double",

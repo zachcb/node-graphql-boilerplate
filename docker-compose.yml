@@ -1,38 +1,57 @@
-version: "3.7"
+version: "3"
 
 services:
-    # server:
-    #     container_name: gql-test-server
+    client:
+        container_name: gql-test-client
+        env_file: .env
+        # restart: always
+        environment:
+            DEPEND_HOST: mongo
+            DEPEND_PORT: ${PG_PORT}
+        volumes:
+            - ./services/client:/app/services/client
+            - /app/services/client/node_modules
+            - /app/services/client/.next
+        # depends_on:
+        #     - api
+        ports:
+            - ${CLIENT_PORT}:${CLIENT_PORT}
+        build:
+            context: .
+            dockerfile: ./docker/images/client/Dockerfile.dev
+    # api:
+    #     container_name: gql-test-api
     #     env_file: .env
     #     environment:
-    #         DEPEND_HOST: postgres
-    #         DEPEND_PORT: ${PG_PORT}
+    #         DEPEND_HOST: mongo
+    #         DEPEND_PORT: 27017
     #     volumes:
     #         - ./services/api/src:/usr/src/app/src:delegated
     #         - /usr/src/app/node_modules
     #     depends_on:
-    #         - postgres
+    #         - mongo
     #         - redis
     #     networks:
-    #         - postgres
+    #         - mongo
     #         - redis
     #     ports:
-    #         - ${PORT}:${PORT}
+    #         - ${API_PORT}:${API_PORT}
     #     build:
     #         context: .
-    #         dockerfile: ./docker/Dockerfile.dev
+    #         dockerfile: ./docker/images/api/Dockerfile.dev
 
     # https://github.com/alexmacarthur/local-docker-db/blob/master/mongo/docker-compose.yml
-    db:
-        image: mongo:latest
-        volumes:
-            - dbdata:/data/db
-        ports:
-            - 27017:27017
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: falcon
-            MONGO_INITDB_DATABASE: sandbox
+    # mongo:
+    #     container_name: gql-test-mongo
+    #     image: mongo:latest
+    #     volumes:
+    #         - dbdata:/data/db
+    #     ports:
+    #         - 27017:27017
+    #     environment:
+    #         MONGO_INITDB_ROOT_USERNAME: root
+    #         MONGO_INITDB_ROOT_PASSWORD: falcon
+    #         MONGO_INITDB_DATABASE: sandbox
     
     # redis:
     #     container_name: gql-test-redis
@@ -64,6 +83,8 @@ volumes:
     redis:
     
 networks:
+    mongo:
+        driver: bridge
     postgres:
         driver: bridge
     redis:

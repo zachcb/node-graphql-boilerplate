@@ -16,7 +16,10 @@ module.exports = {
       node: {
         extensions: [".ts"],
       },
-      typescript: {},
+      typescript: {
+        alwaysTryTypes: true,
+        project: ["tsconfig.json", "services/*/tsconfig.json"],
+      },
     },
   },
 };

@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== "production") {
 
 export const config: IConfig = {
   PRODUCTION: process.env.NODE_ENV === "production",
-  PORT: parseInt(process.env.PORT, 10) || 5000,
+  PORT: parseInt(process.env.SERVER_PORT, 10) || 5000,
   ORIGIN_URL: process.env.ORIGIN_URL,
   PG_NAME: process.env.PG_NAME,
   PG_HOST: process.env.PG_HOST,

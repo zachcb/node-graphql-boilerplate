@@ -1,5 +1,5 @@
 {
-  "compileOnSave": false,
+  // "compileOnSave": false,
   "compilerOptions": {
     "target": "ES6",
     "module": "esnext",
@@ -16,8 +16,5 @@
     "removeComments": true,
     "lib": ["esnext", "esnext.asynciterable"],
   },
-  "include": [
-    "services/api/**/*.ts"
-  ],
   "exclude": ["node_modules", ".build", ".docker"]
 }
